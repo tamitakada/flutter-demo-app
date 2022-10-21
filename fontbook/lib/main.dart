@@ -90,6 +90,17 @@ class _HomePageState extends State<HomePage> with FontUtils, Auth {
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
+              leading: uid.isNotEmpty ? IconButton(
+                onPressed: () {
+                  logoutUser();
+                  setState(() {});
+                },
+                icon: const Icon(
+                  Icons.logout,
+                  color: Colors.black,
+                  size: 28,
+                ),
+              ) : Container(),
               actions: [
                 IconButton(
                   onPressed: () {

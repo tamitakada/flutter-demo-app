@@ -30,7 +30,7 @@ class RegisterFormState extends State<RegisterForm> with Auth {
               style: Theme.of(context).textTheme.bodyText1,
               decoration: InputDecoration(
                   enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white)
+                      borderSide: BorderSide(color: Colors.black)
                   ),
                   labelText: "EMAIL",
                   labelStyle: Theme.of(context).textTheme.bodyText2
@@ -50,7 +50,7 @@ class RegisterFormState extends State<RegisterForm> with Auth {
               style: Theme.of(context).textTheme.bodyText1,
               decoration: InputDecoration(
                   enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white)
+                      borderSide: BorderSide(color: Colors.black)
                   ),
                   labelText: "PASSWORD",
                   labelStyle: Theme.of(context).textTheme.bodyText2
@@ -73,7 +73,7 @@ class RegisterFormState extends State<RegisterForm> with Auth {
                       passwordController.text
                   );
                   if (loggedIn) {
-                    Navigator.of(context).popAndPushNamed('/profile');
+                    Navigator.of(context).popAndPushNamed('/');
                   }
                 }
               },

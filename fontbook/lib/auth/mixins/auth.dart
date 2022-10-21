@@ -6,6 +6,10 @@ mixin Auth {
   static final auth = FirebaseAuth.instance;
   static final db = FirebaseFirestore.instance;
 
+  void logoutUser() async {
+    await auth.signOut();
+  }
+
   Future<String> getUidIfUserIsLoggedIn() async {
     if (await auth.currentUser != null) {
       return auth.currentUser?.uid ?? "";

@@ -70,7 +70,7 @@ class LoginFormState extends State<LoginForm> with Auth {
                 if (_formKey.currentState!.validate()) {
                   bool loggedIn = await login(emailController.text, passwordController.text);
                   if (loggedIn) {
-                    Navigator.of(context).popAndPushNamed('/favorites');
+                    Navigator.of(context).popAndPushNamed('/');
                   }
                 }
               },
