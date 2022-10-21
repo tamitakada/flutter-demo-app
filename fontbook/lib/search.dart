@@ -14,12 +14,11 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> with FontUtils, Auth {
 
   String query = "";
-  List<String> allFonts = [];
 
-  Future<List<Tuple<String, bool>>> getUidAndFontsList() async {
+  Future<Tuple<String, List<Tuple<String, bool>>>> getUidAndFontsList() async {
     String uid = await getUidIfUserIsLoggedIn();
-    allFonts = await getAllFontNames();
-    return await getFontDataMatchingQuery(uid, query, allFonts);
+    List<Tuple<String, bool>> allFonts = await getFontsWithFavoriteData(uid);
+    return Tuple(first: uid, second: await getFontDataMatchingQuery(uid, query, allFonts));
   }
 
   @override
@@ -29,12 +28,19 @@ class _SearchPageState extends State<SearchPage> with FontUtils, Auth {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.cancel_outlined, color: Colors.black, size: 28,),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
-      body: FutureBuilder<List<Tuple<String, bool>>>(
+      body: FutureBuilder<Tuple<String, List<Tuple<String, bool>>>>(
         future: getUidAndFontsList(),
-        builder: (BuildContext context, AsyncSnapshot<List<Tuple<String, bool>>> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<Tuple<String, List<Tuple<String, bool>>>> snapshot) {
           if (snapshot.hasData) {
-            List<Tuple<String, bool>> fonts = snapshot.data!;
+            String uid = snapshot.data!.first;
+            List<Tuple<String, bool>> fonts = snapshot.data!.second;
             return ListView.builder(
               itemCount: fonts.length + 1,
               itemBuilder: (BuildContext context, int i) {
@@ -68,6 +74,15 @@ class _SearchPageState extends State<SearchPage> with FontUtils, Auth {
                     fontName: fonts[i - 1].first,
                     showFavorited: true,
                     favorited: fonts[i - 1].second,
+                    callback: () {
+                      fonts[i - 1].second = !fonts[i - 1].second;
+                      changeFavoriteStatus(
+                          uid,
+                          fonts[i - 1].first,
+                          fonts[i - 1].second
+                      ).then((value) => { WidgetsBinding.instance
+                          .addPostFrameCallback((_) => setState(() {})) });
+                    }
                   );
                 }
               },

@@ -11,6 +11,12 @@ class LoginPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
+          leading: IconButton(
+            icon: Icon(Icons.cancel_outlined, color: Colors.black, size: 28,),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

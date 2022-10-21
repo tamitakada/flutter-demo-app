@@ -25,25 +25,37 @@ mixin FontUtils {
     return fontNames;
   }
 
-  Future<List<Tuple<String, bool>>> getFontDataMatchingQuery(String uid, String query, List<String> allFonts) async {
-    List<String> searchedFonts = [];
-    for (int i = 0; i < allFonts.length; i += 1) {
-      if (allFonts[i].toLowerCase().contains(query.toLowerCase())) {
-        searchedFonts.add(allFonts[i]);
-      }
+  Future<List<Tuple<String, bool>>> getFontsWithFavoriteData(String uid) async {
+    List<String> fonts = await getAllFontNames();
+    List<String> favorites = await getFavoritedFonts(uid);
+    List<Tuple<String, bool>> data = [];
+    for (int i = 0; i < fonts.length; i += 1) {
+      data.add(
+        Tuple(first: fonts[i], second: favorites.contains(fonts[i]))
+      );
     }
-    List<String> favoritedFonts = await getFavoritedFonts(uid);
-    List<Tuple<String, bool>> fontData = [];
-    for (int i = 0; i < searchedFonts.length; i += 1) {
-      fontData.add(Tuple(
-          first: searchedFonts[i],
-          second: favoritedFonts.contains(searchedFonts[i])
-      ));
-    }
-    return fontData;
+    return data;
   }
 
-  void changeFavoriteStatus(String uid, String fontid, bool favorited) async {
+  Future<List<Tuple<String, bool>>> getFontDataMatchingQuery(String uid, String query, List<Tuple<String, bool>> allFonts) async {
+    List<Tuple<String, bool>> searchedFonts = [];
+    for (int i = 0; i < allFonts.length; i += 1) {
+      if (allFonts[i].first.toLowerCase().contains(query.toLowerCase())) {
+        searchedFonts.add(Tuple(first: allFonts[i].first, second: allFonts[i].second));
+      }
+    }
+    return searchedFonts;
+  }
+  
+  Future<bool> isFontFavorited(String uid, String fontid) async {
+    final savedFonts = await db.collection("savedFonts")
+      .where("uid", isEqualTo: uid)
+      .where("fontid", isEqualTo: fontid)
+      .get();
+    return savedFonts.docs.isNotEmpty;
+  }
+
+  Future<void> changeFavoriteStatus(String uid, String fontid, bool favorited) async {
     if (favorited) {
       await db.collection("savedFonts")
           .add({"uid": uid, "fontid": fontid});

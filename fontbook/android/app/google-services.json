@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "829650128128",
+    "project_id": "fontbook-c455e",
+    "storage_bucket": "fontbook-c455e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:829650128128:android:9699f2e5e3538de8e677e5",
+        "android_client_info": {
+          "package_name": "com.example.fontbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "829650128128-iqujljn7f05b309og0icbndtv3b0pfec.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-omd0Xv4UrpxBMbk8yLBaR1g2rwRGpWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "829650128128-iqujljn7f05b309og0icbndtv3b0pfec.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "829650128128-620fm6ctkeb4dg38a7r8feja5ve88p0q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fontbook"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

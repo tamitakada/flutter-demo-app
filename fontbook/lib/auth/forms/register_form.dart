@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:fontbook/auth/mixins/auth.dart';
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+class RegisterForm extends StatefulWidget {
+  const RegisterForm({super.key});
 
   @override
-  LoginFormState createState() {
-    return LoginFormState();
+  RegisterFormState createState() {
+    return RegisterFormState();
   }
 }
 
-class LoginFormState extends State<LoginForm> with Auth {
+class RegisterFormState extends State<RegisterForm> with Auth {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -30,7 +30,7 @@ class LoginFormState extends State<LoginForm> with Auth {
               style: Theme.of(context).textTheme.bodyText1,
               decoration: InputDecoration(
                   enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black)
+                      borderSide: BorderSide(color: Colors.white)
                   ),
                   labelText: "EMAIL",
                   labelStyle: Theme.of(context).textTheme.bodyText2
@@ -50,7 +50,7 @@ class LoginFormState extends State<LoginForm> with Auth {
               style: Theme.of(context).textTheme.bodyText1,
               decoration: InputDecoration(
                   enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black)
+                      borderSide: BorderSide(color: Colors.white)
                   ),
                   labelText: "PASSWORD",
                   labelStyle: Theme.of(context).textTheme.bodyText2
@@ -68,21 +68,18 @@ class LoginFormState extends State<LoginForm> with Auth {
             child: ElevatedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  bool loggedIn = await login(emailController.text, passwordController.text);
+                  bool loggedIn = await createUser(
+                      emailController.text,
+                      passwordController.text
+                  );
                   if (loggedIn) {
-                    Navigator.of(context).popAndPushNamed('/favorites');
+                    Navigator.of(context).popAndPushNamed('/profile');
                   }
                 }
               },
-              child: Text('LOGIN', style: Theme.of(context).textTheme.bodyText2,),
+              child: Text('SUBMIT', style: Theme.of(context).textTheme.bodyText2,),
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed('/register');
-            },
-            child: Text('REGISTER', style: Theme.of(context).textTheme.bodyText2,),
-          )
         ],
       ),
     );
